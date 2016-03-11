@@ -1,0 +1,70 @@
+body {
+  padding: 10px;
+}
+
+h1, h2, h3 {
+  text-align: center;
+}
+
+#board {
+  margin: 0 auto;
+}
+
+#board td {
+  border: 1px solid #ddd;
+  width: 18px;
+  height: 18px;
+}
+
+td.dead {
+  background-color: #fff;
+}
+
+#control_panel {
+  margin: 10px auto;
+  text-align: center;
+}
+
+td.F5 {
+  background-color: #5BC0EB;
+}
+
+td.E5 {
+  background-color: #FDE74C;
+}
+
+td.D5 {
+  background-color: #9BC53D;
+}
+
+td.C5 {
+  background-color: #E55934;
+}
+
+td.B4 {
+  background-color: #FA7921;
+}
+
+td.A4 {
+  background-color: purple;
+}
+
+td.G4 {
+  background-color: #E83F6F;
+}
+
+td.F4 {
+  background-color: #32936F;
+}
+
+td.E4 {
+  background-color: #2274A5;
+}
+
+td.D4 {
+  background-color: green;
+}
+
+td.C4 {
+  background-color: #FFBF00;
+}
