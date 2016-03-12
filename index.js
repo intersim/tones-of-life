@@ -129,7 +129,7 @@ var gameUtilities = {
 };
 
 var gameOfLife = {
-    width: 60,
+    width: 40,
     height: 11,
     stepInterval: null,
 
@@ -168,6 +168,15 @@ var gameOfLife = {
         });
     },
 
+    forEachRow: function (iteratorFunc) {
+        var cellElements = document.getElementsByTagName('td');
+
+        [].slice.call(cellElements).forEach(function (cellElement) {
+            var idHalves = cellElement.id.split('-');
+            iteratorFunc(cellElement, parseInt(idHalves[0], 10), parseInt(idHalves[1], 10));
+        });
+    },
+
     setupBoardEvents: function () {
         var onCellClick = function (e) {
             gameUtilities.toggleStatus(this);
@@ -197,41 +206,42 @@ var gameOfLife = {
                 kill: {}
             };
 
-            rule30.resurrect.alive = [
-                {}, 
-                {right: true}
-            ];
+            rule30.resurrect.alive = [{left: false, right: false}, {left: false, right: true}];
+            rule30.resurrect.dead = [{left: true, right: false}, {left: false, right: true}];
+            rule30.kill.alive = [{left: true, right: false}, {left: true, right: true}];
+            rule30.kill.dead = [{left: false, right: false}, {right: true, left: true}];
 
-            rule30.resurrect.dead = [{left: true}, {right: true, left: true}];
-            rule30.kill.alive = [{right: true}, {left: true}];
-            rule30.kill.dead = [{}, {right: true, left: true}];
-
-            function isNeighborConditionsMet (innerConditions, rightStatus, leftStatus) {
-                var leftConditionMet = (innerConditions.left == (leftStatus === 'alive'));
-                var rightConditionMet = (innerConditions.right == (rightStatus === 'alive'));
-
-                return leftConditionMet && rightConditionMet;
-            }
-
+            // should the cell be alive, or dead?
             function isSelfConditionMet (shouldSelfAlive, selfStatus) {
                return shouldSelfAlive == (selfStatus === 'alive')
             }
 
+            // are the neighbors' statuses meeting the given condition?
+            function isNeighborConditionsMet (innerConditions, rightStatus, leftStatus) {
+                var leftConditionMet = (innerConditions.left == (leftStatus === 'alive'));
+                var rightConditionMet = (innerConditions.right == (rightStatus === 'alive'));
+                return leftConditionMet && rightConditionMet;
+            }
+
+            // is one of the conditions in the array being met?
             function isANeighborConditionMet (arrNeighborCond, rightStatus, leftStatus) {
                 for (var i = 0; i < arrNeighborCond.length; i++) {
                     var isConditionMet = isNeighborConditionsMet(arrNeighborCond[i], rightStatus, leftStatus);
-
                     if (isConditionMet) return true;
                 }
                 return false;
             }
 
+            // is the cell status right, and is the condition in the array being met? if yes, kill or resurrect the cell
             function evaluateRuleSet (ruleObj, cell) {
-                debugger;
+                var cellCoords = gameUtilities.getCellCoords(cell);
+                var cellX = cellCoords.x;
+                var cellY = cellCoords.y;
+
                 var cellStatus = gameUtilities.getStatus(cell);
                 var neighbors = gameUtilities.getNeighbors(cell);
-                var leftStatus = gameUtilities.getStatus(neighbors[1]) || 'dead';
-                var rightStatus = gameUtilities.getStatus(neighbors[0]) || 'dead';
+                var leftStatus = gameUtilities.getStatus(neighbors[1])/* || 'dead'*/;
+                var rightStatus = gameUtilities.getStatus(neighbors[0])/* || 'dead'*/;
                 var nextRow = gameUtilities.getNextRow(cell);
                 var nextCell = nextRow[1];
 
@@ -240,14 +250,14 @@ var gameOfLife = {
                 var isDeadConditionMet = isSelfConditionMet(false, cellStatus) && isANeighborConditionMet(ruleObj.resurrect.dead, rightStatus, leftStatus)
 
 
-                if (isAliveConditionMet || isDeadConditionMet) gameUtilities.resurrectCell(cell);
+                if (isAliveConditionMet || isDeadConditionMet) gameUtilities.resurrectCell(nextCell);
 
                 isAliveConditionMet = isSelfConditionMet(true, cellStatus) && isANeighborConditionMet(ruleObj.kill.alive, rightStatus, leftStatus);
 
                 isDeadConditionMet = isSelfConditionMet(false, cellStatus) && isANeighborConditionMet(ruleObj.kill.dead, rightStatus, leftStatus)
 
                 
-                if (isAliveConditionMet || isDeadConditionMet) gameUtilities.killCell(cell);
+                if (isAliveConditionMet || isDeadConditionMet) gameUtilities.killCell(nextCell);
             }
 
             evaluateRuleSet (rule30, cell);
@@ -270,6 +280,5 @@ gameOfLife.createAndShowBoard();
 // gameUtilities.makeDuration: needs to return a string of 8n or more (simplify into measures, quarter notes?)
 
 var playBoard = function () {
-  var cellElements = document.getElementsByTagName('td');
-  console.log("playing a note!");
+  // one column at a time:
 };

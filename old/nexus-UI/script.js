@@ -1,15 +1,20 @@
-var myRows = 11;
-var myColumns = 38;
+var myRows = 3;
+var myColumns = 3;
 
 nx.onload = function(){
   nx.colorize("#5DD39E");
-
   matrix1.row = myRows;
   matrix1.col = myColumns;
   matrix1.resize(30*myColumns, 30*myRows);
   matrix1.init();
-  matrix1.matrix[0][myRows - 1] = 1;
-  matrix1.draw();
+
+};
+
+var loadRule30 = function () {
+  matrix1.setCell(1,1,true);
+  matrix1.setCell(0,1,true);
+  // matrix1.draw();
+  console.log("matrix1.place", matrix1.plaec);
 };
 
 var beatsArr = function (num) {
@@ -39,9 +44,9 @@ var loop = new Tone.Sequence(function(time, col){
 
 Tone.Transport.start();
 
-var loadRule30 = function () {
-
-};
+$('#load').click(function() {
+  loadRule30();
+});
 
 $('#start').click(function() {
   loop.start();
