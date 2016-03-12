@@ -119,6 +119,8 @@ var gameUtilities = {
 
 };
 
+var currentX = 0;
+
 var gameOfLife = {
     width: 5,
     height: 5,
@@ -171,8 +173,20 @@ var gameOfLife = {
         return res;
     },
 
-    forEachCellInColumn: function (iteratorFunc) {
-        var cellElements = this.getFirstColumn(5);
+    getThisColumn: function (currentX, boardHeight) {
+        var res = [];
+        var i = currentX;
+        for (var j = 0; j < boardHeight; j++) {
+            var sc = gameUtilities.selectCellWithCoordinates;
+            var myCell = sc(i, j)
+            res.push(myCell);
+    }
+        console.log(res);
+        return res;
+    },
+
+    forEachCellInColumn: function (currentX, iteratorFunc) {
+        var cellElements = this.getThisColumn(currentX, 5);
 
         [].slice.call(cellElements).forEach(function (cellElement) {
             var idHalves = cellElement.id.split('-');
@@ -201,12 +215,13 @@ var gameOfLife = {
 
     clearBoard: function () {
         this.forEachCell(function (cell) {
+            currentX = 0;
             gameUtilities.setStatus(cell, 'dead');
         });
     },
 
     step: function () {
-        this.forEachCellInColumn(function (cell) {
+        this.forEachCellInColumn(currentX, function (cell) {
 
             // ********** RULE 30 **********
             rule30 = {
@@ -292,6 +307,8 @@ var gameOfLife = {
 
             evaluateRuleSet (rule90, cell);
         });
+            currentX++;
+            console.log("currentX: ", currentX);
     },
 
     fillBoard: function () {
