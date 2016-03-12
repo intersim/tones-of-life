@@ -1,30 +1,55 @@
-// var start4th = "";
+var currentX = 0;
+var loopCount = 0;
 
-// var next4th = function () {
-//   return start4th += "+4n";
-// };
+var synth = new Tone.PolySynth(16, Tone.Monosynth).toMaster();
 
-// var synth = new Tone.SimpleSynth().toMaster();
-
-// synth.triggerAttackRelease("D4", "4n");
-// synth.triggerAttackRelease("E4", "4n", next4th());
-// synth.triggerAttackRelease("C4", "4n", next4th());
-// synth.triggerAttackRelease("C3", "4n", next4th());
-// synth.triggerAttackRelease("G3", "4n", next4th());
-
-var synth = new Tone.PolySynth(10, Tone.Monosynth).toMaster(); // 10 is the height of the board; make variable in future?
-
-synth.set({
-    "type" : "sine",
-    "envelope" : {
-        "attack": 0.005,
-        "decay": 0.1,
-        "sustain": 0.3,
-        "release": 1
-    }
-});
+synth.set("envelope.attack", 0.04);
 
 var scale = {};
+
+// ********** RULE 30 **********
+rule30 = {
+    resurrect: {},
+    kill: {}
+};
+
+rule30.resurrect.alive = [{left: false, right: false}, {left: false, right: true}];
+rule30.resurrect.dead = [{left: true, right: false}, {left: false, right: true}];
+rule30.kill.alive = [{left: true, right: false}, {left: true, right: true}];
+rule30.kill.dead = [{left: false, right: false}, {right: true, left: true}];
+
+// ********** RULE 54 **********
+rule54 = {
+    resurrect: {},
+    kill: {}
+};
+
+rule54.resurrect.alive = [{left: false, right: false}];
+rule54.resurrect.dead = [{left: false, right: true}, {left: true, right: false}, {left: true, right: true}];
+rule54.kill.alive = [{left: false, right: true}, {left: true, right: false}, {left: true, right: true}];
+rule54.kill.dead = [{left: false, right: false}];
+
+// ********** RULE 90 **********
+rule90 = {
+    resurrect: {},
+    kill: {}
+};
+
+rule90.resurrect.alive = [{left: false, right: true}, {left: true, right: false}];
+rule90.resurrect.dead = [{left: false, right: true}, {left: true, right: false}];
+rule90.kill.alive = [{left: false, right: false}, {left: true, right: true}];
+rule90.kill.dead = [{left: false, right: false}, {left: true, right: true}];
+
+// ********** RULE 150 **********
+rule150 = {
+    resurrect: {},
+    kill: {}
+};
+
+rule150.resurrect.alive = [{left: false, right: false}, {left: true, right: true}];
+rule150.resurrect.dead = [{left: false, right: true}, {left: true, right: false}];
+rule150.kill.alive = [{left: false, right: true}, {left: true, right: false}];
+rule150.kill.dead = [{left: false, right: false}, {left: true, right: true}];
 
 var gameUtilities = {
     selectCellWithCoordinates: function (x, y) {
@@ -54,6 +79,11 @@ var gameUtilities = {
         if (y == '8') note = "C4";
         if (y == '9') note = "A3";
         if (y == '10') note = "G3";
+        if (y == '11') note = "E3";
+        if (y == '12') note = "D3";
+        if (y == '13') note = "C3";
+        if (y == '14') note = "A2";
+        if (y == '15') note = "G2";
         return note;
     },
     setNoteClass: function(cell, note) {
@@ -126,11 +156,9 @@ var gameUtilities = {
 
 };
 
-var currentX = 0;
-
 var gameOfLife = {
     width: 17,
-    height: 11,
+    height: 16,
     stepInterval: null,
 
     createAndShowBoard: function () {
@@ -142,7 +170,7 @@ var gameOfLife = {
         for (var h = 0; h < this.height; h++) {
             tablehtml += "<tr id='row+" + h + "'>";
             for (var w = 0; w < this.width; w++) {
-                if (w === 0 && h === 5) {
+                if (w === 0 && h === Math.floor(this.height/2)) {
                     tablehtml += "<td data-status='alive' class='alive " + gameUtilities.setNote(h) + "' data-note='" + gameUtilities.setNote(h) + "' id='" + w + "-" + h + "'></td>";
                 }
                 else tablehtml += "<td data-status='dead' data-note='" + gameUtilities.setNote(h) + "' id='" + w + "-" + h + "'></td>";
@@ -168,17 +196,6 @@ var gameOfLife = {
         });
     },
 
-    // getFirstColumn: function (boardHeight) {
-    //     var res = [];
-    //     var i = 0;
-    //     for (var j = 0; j < boardHeight; j++) {
-    //         var sc = gameUtilities.selectCellWithCoordinates;
-    //         var myCell = sc(i, j)
-    //         res.push(myCell);
-    // }
-    //     return res;
-    // },
-
     getThisColumn: function (currentX, boardHeight) {
         var res = [];
         var i = currentX;
@@ -191,7 +208,7 @@ var gameOfLife = {
     },
 
     forEachCellInColumn: function (currentX, iteratorFunc) {
-        var cellElements = this.getThisColumn(currentX, 11);
+        var cellElements = this.getThisColumn(currentX, this.height);
 
         [].slice.call(cellElements).forEach(function (cellElement) {
             if (!cellElement) return;
@@ -203,7 +220,6 @@ var gameOfLife = {
     setupBoardEvents: function () {
         var onCellClick = function (e) {
             gameUtilities.toggleStatus(this);
-            // gameUtilities.getThisRow(this);
             var neighbors = gameUtilities.getNeighbors(this);
 
         };
@@ -214,8 +230,6 @@ var gameOfLife = {
 
         document.getElementById('step_btn').addEventListener('click', this.step.bind(this));
         document.getElementById('clear_btn').addEventListener('click', this.clearBoard.bind(this));
-        // document.getElementById('fill_btn').addEventListener('click', this.fillBoard.bind(this));
-        // document.getElementById('play_btn').addEventListener('click', this.enableAutoPlay.bind(this));
         document.getElementById('autoplay_btn').addEventListener('click', this.enableAutoPlay.bind(this));
     },
 
@@ -229,39 +243,6 @@ var gameOfLife = {
 
     step: function () {
         this.forEachCellInColumn(currentX, function (cell) {
-
-            // ********** RULE 30 **********
-            rule30 = {
-                resurrect: {},
-                kill: {}
-            };
-
-            rule30.resurrect.alive = [{left: false, right: false}, {left: false, right: true}];
-            rule30.resurrect.dead = [{left: true, right: false}, {left: false, right: true}];
-            rule30.kill.alive = [{left: true, right: false}, {left: true, right: true}];
-            rule30.kill.dead = [{left: false, right: false}, {right: true, left: true}];
-
-            // ********** RULE 54 **********
-            rule54 = {
-                resurrect: {},
-                kill: {}
-            };
-
-            rule54.resurrect.alive = [{left: false, right: false}];
-            rule54.resurrect.dead = [{left: false, right: true}, {left: true, right: false}, {left: true, right: true}];
-            rule54.kill.alive = [{left: false, right: true}, {left: true, right: false}, {left: true, right: true}];
-            rule54.kill.dead = [{left: false, right: false}];
-
-            // ********** RULE 90 **********
-            rule90 = {
-                resurrect: {},
-                kill: {}
-            };
-
-            rule90.resurrect.alive = [{left: false, right: true}, {left: true, right: false}];
-            rule90.resurrect.dead = [{left: false, right: true}, {left: true, right: false}];
-            rule90.kill.alive = [{left: false, right: false}, {left: true, right: true}];
-            rule90.kill.dead = [{left: false, right: false}, {left: true, right: true}];
 
             // should the cell be alive, or dead?
             function isSelfConditionMet (shouldSelfAlive, selfStatus) {
@@ -314,11 +295,12 @@ var gameOfLife = {
 
             evaluateRuleSet (rule54, cell);
         });
-        console.log("currentX: ", currentX);
 
         if (currentX === this.width - 2) {
             console.log("end of the board!");
             currentX = 0;
+            loopCount++;
+            console.log("loopCount: ", loopCount);
             return;
         }
 
@@ -354,8 +336,3 @@ var gameOfLife = {
 };
 
 gameOfLife.createAndShowBoard();
-
-// time to play the board!
-// set duration depending on w value in board setup by making it data in the 
-// ? gameUtilities.makeDuration: needs to return a string of 8n or more (simplify into measures, quarter notes?)
-
