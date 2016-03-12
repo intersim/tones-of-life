@@ -159,27 +159,26 @@ var gameOfLife = {
         });
     },
 
-    forEachCell2: function (iteratorFunc) {
-        var cellElements = document.getElementsByTagName('td');
+    getFirstColumn: function (boardHeight) {
+        var res = [];
+        var i = 0;
+        for (var j = 0; j < boardHeight; j++) {
+            var sc = gameUtilities.selectCellWithCoordinates;
+            var myCell = sc(i, j)
+            res.push(myCell);
+    }
+        console.log(res);
+        return res;
+    },
+
+    forEachCellInColumn: function (iteratorFunc) {
+        var cellElements = this.getFirstColumn(5);
 
         [].slice.call(cellElements).forEach(function (cellElement) {
             var idHalves = cellElement.id.split('-');
             iteratorFunc(cellElement, parseInt(idHalves[0], 10), parseInt(idHalves[1], 10));
         });
     },
-
-    // getAllColumns: function (h, w) {
-    //     var res = [];
-    //     for (var i = 0; i < h; i++) {
-    //         for (var j = 0; j < w; j++) {
-    //             var sc = gameUtilities.selectCellWithCoordinates;
-    //             var myCell = sc(i, j)
-    //             res.push(myCell);
-    //         }
-    //     }
-    //     console.log(res);
-    //     return res;
-    // },
 
     setupBoardEvents: function () {
         var onCellClick = function (e) {
@@ -197,7 +196,7 @@ var gameOfLife = {
         document.getElementById('clear_btn').addEventListener('click', this.clearBoard.bind(this));
         document.getElementById('fill_btn').addEventListener('click', this.fillBoard.bind(this));
         document.getElementById('play_btn').addEventListener('click', this.enableAutoPlay.bind(this));
-        document.getElementById('col_btn').addEventListener('click', getAllColumns(5, 5));
+        document.getElementById('col_btn').addEventListener('click', this.getFirstColumn(5, 5));
     },
 
     clearBoard: function () {
@@ -207,7 +206,7 @@ var gameOfLife = {
     },
 
     step: function () {
-        this.forEachCell(function (cell) {
+        this.forEachCellInColumn(function (cell) {
 
             // ********** RULE 30 **********
             rule30 = {
