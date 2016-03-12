@@ -50,15 +50,6 @@ var gameUtilities = {
         if (y == '10') note = "C4";
         return note;
     },
-    // makeDuration: function (w) {
-    //   var duration = "";
-
-    //   for (var i = 0; i < w; i++) {
-    //     // make note values here!
-    //   };
-
-    //   return duration;
-    // },
     setNoteClass: function(cell, note) {
         cell.className = note;
     },
@@ -124,30 +115,13 @@ var gameUtilities = {
         nextRow.push(sc(cellX + 1, cellY + 1)); // Next column, row below
 
         return nextRow;
-    },
-
-    getThisRow: function (cell) {
-
-        var thisRow = [];
-        var cellCoords = gameUtilities.getCellCoords(cell);
-        var cellX = cellCoords.x;
-        var cellY = cellCoords.y;
-        var sc = gameUtilities.selectCellWithCoordinates;
-
-        // Get all cells in this row - height is 11;
-        for (var i = 0; i < 11; i++) {
-            thisRow.push(sc(cellX, i));
-        } 
-
-        console.log("thisRow: ", thisRow);
-        return thisRow;
     }
 
 };
 
 var gameOfLife = {
-    width: 40,
-    height: 11,
+    width: 5,
+    height: 5,
     stepInterval: null,
 
     createAndShowBoard: function () {
@@ -159,7 +133,7 @@ var gameOfLife = {
         for (var h = 0; h < this.height; h++) {
             tablehtml += "<tr id='row+" + h + "'>";
             for (var w = 0; w < this.width; w++) {
-                if (w === 0 && h === 5) {
+                if (w === 0 && h === 2) {
                     tablehtml += "<td data-status='alive' class='alive " + gameUtilities.setNote(h) + "' data-note='" + gameUtilities.setNote(h) + "' id='" + w + "-" + h + "'></td>";
                 }
                 else tablehtml += "<td data-status='dead' data-note='" + gameUtilities.setNote(h) + "' id='" + w + "-" + h + "'></td>";
@@ -185,19 +159,32 @@ var gameOfLife = {
         });
     },
 
-    // forEachRow: function (iteratorFunc) {
-    //     var cellElements = document.getElementsByTagName('td');
+    forEachCell2: function (iteratorFunc) {
+        var cellElements = document.getElementsByTagName('td');
 
-    //     [].slice.call(cellElements).forEach(function (cellElement) {
-    //         var idHalves = cellElement.id.split('-');
-    //         iteratorFunc(cellElement, parseInt(idHalves[0], 10), parseInt(idHalves[1], 10));
-    //     });
+        [].slice.call(cellElements).forEach(function (cellElement) {
+            var idHalves = cellElement.id.split('-');
+            iteratorFunc(cellElement, parseInt(idHalves[0], 10), parseInt(idHalves[1], 10));
+        });
+    },
+
+    // getAllColumns: function (h, w) {
+    //     var res = [];
+    //     for (var i = 0; i < h; i++) {
+    //         for (var j = 0; j < w; j++) {
+    //             var sc = gameUtilities.selectCellWithCoordinates;
+    //             var myCell = sc(i, j)
+    //             res.push(myCell);
+    //         }
+    //     }
+    //     console.log(res);
+    //     return res;
     // },
 
     setupBoardEvents: function () {
         var onCellClick = function (e) {
             gameUtilities.toggleStatus(this);
-            gameUtilities.getThisRow(this);
+            // gameUtilities.getThisRow(this);
             var neighbors = gameUtilities.getNeighbors(this);
 
         };
@@ -210,6 +197,7 @@ var gameOfLife = {
         document.getElementById('clear_btn').addEventListener('click', this.clearBoard.bind(this));
         document.getElementById('fill_btn').addEventListener('click', this.fillBoard.bind(this));
         document.getElementById('play_btn').addEventListener('click', this.enableAutoPlay.bind(this));
+        document.getElementById('col_btn').addEventListener('click', getAllColumns(5, 5));
     },
 
     clearBoard: function () {
@@ -337,8 +325,5 @@ gameOfLife.createAndShowBoard();
 
 // time to play the board!
 // set duration depending on w value in board setup by making it data in the 
-// gameUtilities.makeDuration: needs to return a string of 8n or more (simplify into measures, quarter notes?)
+// ? gameUtilities.makeDuration: needs to return a string of 8n or more (simplify into measures, quarter notes?)
 
-// var playBoard = function () {
-//   // one column at a time:
-// };
