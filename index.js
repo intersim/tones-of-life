@@ -39,17 +39,17 @@ var gameUtilities = {
         return cell.getAttribute('data-note');
     },
     setNote: function (y) {
-        if (y == '0') note = "F5";
+        if (y == '0') note = "G5";
         if (y == '1') note = "E5";
         if (y == '2') note = "D5";
         if (y == '3') note = "C5";
-        if (y == '4') note = "B4";
-        if (y == '5') note = "A4";
-        if (y == '6') note = "G4";
-        if (y == '7') note = "F4";
-        if (y == '8') note = "E4";
-        if (y == '9') note = "D4";
-        if (y == '10') note = "C4";
+        if (y == '4') note = "A4";
+        if (y == '5') note = "G4";
+        if (y == '6') note = "E4";
+        if (y == '7') note = "D4";
+        if (y == '8') note = "C4";
+        if (y == '9') note = "A3";
+        if (y == '10') note = "G3";
         return note;
     },
     setNoteClass: function(cell, note) {
@@ -164,17 +164,16 @@ var gameOfLife = {
         });
     },
 
-    getFirstColumn: function (boardHeight) {
-        var res = [];
-        var i = 0;
-        for (var j = 0; j < boardHeight; j++) {
-            var sc = gameUtilities.selectCellWithCoordinates;
-            var myCell = sc(i, j)
-            res.push(myCell);
-    }
-        console.log(res);
-        return res;
-    },
+    // getFirstColumn: function (boardHeight) {
+    //     var res = [];
+    //     var i = 0;
+    //     for (var j = 0; j < boardHeight; j++) {
+    //         var sc = gameUtilities.selectCellWithCoordinates;
+    //         var myCell = sc(i, j)
+    //         res.push(myCell);
+    // }
+    //     return res;
+    // },
 
     getThisColumn: function (currentX, boardHeight) {
         var res = [];
@@ -184,7 +183,6 @@ var gameOfLife = {
             var myCell = sc(i, j)
             res.push(myCell);
     }
-        console.log(res);
         return res;
     },
 
@@ -215,7 +213,6 @@ var gameOfLife = {
         document.getElementById('fill_btn').addEventListener('click', this.fillBoard.bind(this));
         // document.getElementById('play_btn').addEventListener('click', this.enableAutoPlay.bind(this));
         document.getElementById('autoplay_btn').addEventListener('click', this.enableAutoPlay.bind(this));
-        document.getElementById('col_btn').addEventListener('click', this.getFirstColumn(5, 5));
     },
 
     clearBoard: function () {
@@ -310,10 +307,9 @@ var gameOfLife = {
                 if (isAliveConditionMet || isDeadConditionMet) gameUtilities.killCell(nextCell);
             }
 
-            evaluateRuleSet (rule30, cell);
+            evaluateRuleSet (rule90, cell);
         });
             currentX++;
-            console.log("currentX: ", currentX);
     },
 
     fillBoard: function () {
