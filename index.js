@@ -124,6 +124,23 @@ var gameUtilities = {
         nextRow.push(sc(cellX + 1, cellY + 1)); // Next column, row below
 
         return nextRow;
+    },
+
+    getThisRow: function (cell) {
+
+        var thisRow = [];
+        var cellCoords = gameUtilities.getCellCoords(cell);
+        var cellX = cellCoords.x;
+        var cellY = cellCoords.y;
+        var sc = gameUtilities.selectCellWithCoordinates;
+
+        // Get all cells in this row - height is 11;
+        for (var i = 0; i < 11; i++) {
+            thisRow.push(sc(cellX, i));
+        } 
+
+        console.log("thisRow: ", thisRow);
+        return thisRow;
     }
 
 };
@@ -168,18 +185,19 @@ var gameOfLife = {
         });
     },
 
-    forEachRow: function (iteratorFunc) {
-        var cellElements = document.getElementsByTagName('td');
+    // forEachRow: function (iteratorFunc) {
+    //     var cellElements = document.getElementsByTagName('td');
 
-        [].slice.call(cellElements).forEach(function (cellElement) {
-            var idHalves = cellElement.id.split('-');
-            iteratorFunc(cellElement, parseInt(idHalves[0], 10), parseInt(idHalves[1], 10));
-        });
-    },
+    //     [].slice.call(cellElements).forEach(function (cellElement) {
+    //         var idHalves = cellElement.id.split('-');
+    //         iteratorFunc(cellElement, parseInt(idHalves[0], 10), parseInt(idHalves[1], 10));
+    //     });
+    // },
 
     setupBoardEvents: function () {
         var onCellClick = function (e) {
             gameUtilities.toggleStatus(this);
+            gameUtilities.getThisRow(this);
             var neighbors = gameUtilities.getNeighbors(this);
 
         };
@@ -191,6 +209,7 @@ var gameOfLife = {
         document.getElementById('step_btn').addEventListener('click', this.step.bind(this));
         document.getElementById('clear_btn').addEventListener('click', this.clearBoard.bind(this));
         document.getElementById('fill_btn').addEventListener('click', this.fillBoard.bind(this));
+        document.getElementById('play_btn').addEventListener('click', this.enableAutoPlay.bind(this));
     },
 
     clearBoard: function () {
@@ -201,6 +220,8 @@ var gameOfLife = {
 
     step: function () {
         this.forEachCell(function (cell) {
+
+            // ********** RULE 30 **********
             rule30 = {
                 resurrect: {},
                 kill: {}
@@ -210,6 +231,28 @@ var gameOfLife = {
             rule30.resurrect.dead = [{left: true, right: false}, {left: false, right: true}];
             rule30.kill.alive = [{left: true, right: false}, {left: true, right: true}];
             rule30.kill.dead = [{left: false, right: false}, {right: true, left: true}];
+
+            // ********** RULE 54 **********
+            rule54 = {
+                resurrect: {},
+                kill: {}
+            };
+
+            rule54.resurrect.alive = [{left: false, right: false}];
+            rule54.resurrect.dead = [{left: false, right: true}, {left: true, right: false}, {left: true, right: true}];
+            rule54.kill.alive = [{left: false, right: true}, {left: true, right: false}, {left: true, right: true}];
+            rule54.kill.dead = [{left: false, right: false}];
+
+            // ********** RULE 90 **********
+            rule90 = {
+                resurrect: {},
+                kill: {}
+            };
+
+            rule90.resurrect.alive = [{left: false, right: true}, {left: true, right: false}];
+            rule90.resurrect.dead = [{left: false, right: true}, {left: true, right: false}];
+            rule90.kill.alive = [{left: false, right: false}, {left: true, right: true}];
+            rule90.kill.dead = [{left: false, right: false}, {left: true, right: true}];
 
             // should the cell be alive, or dead?
             function isSelfConditionMet (shouldSelfAlive, selfStatus) {
@@ -260,7 +303,7 @@ var gameOfLife = {
                 if (isAliveConditionMet || isDeadConditionMet) gameUtilities.killCell(nextCell);
             }
 
-            evaluateRuleSet (rule30, cell);
+            evaluateRuleSet (rule90, cell);
         });
     },
 
@@ -269,6 +312,23 @@ var gameOfLife = {
         while (i < 63) {
           this.step.bind(this)();
           i++;
+        }
+    },
+
+    stepInterval: null,
+
+    stop: function () {
+        if (this.stepInterval) {
+            clearInterval(this.stepInterval);
+            this.stepInterval = null;
+        }
+    },
+
+    enableAutoPlay: function () {
+        if (!this.stepInterval) {
+            this.stepInterval = setInterval(this.step.bind(this), 400);
+        } else {
+            this.stop();
         }
     }
 };
@@ -279,6 +339,6 @@ gameOfLife.createAndShowBoard();
 // set duration depending on w value in board setup by making it data in the 
 // gameUtilities.makeDuration: needs to return a string of 8n or more (simplify into measures, quarter notes?)
 
-var playBoard = function () {
-  // one column at a time:
-};
+// var playBoard = function () {
+//   // one column at a time:
+// };
