@@ -5,7 +5,41 @@ var synth = new Tone.PolySynth(16, Tone.Monosynth).toMaster();
 
 synth.set("envelope.attack", 0.04);
 
-var scale = {};
+var pentatonicScale = {
+    0: "G5",
+    1: "E5",
+    2: "D5",
+    3: "C5",
+    4: "A4",
+    5: "G4",
+    6: "E4",
+    7: "D4",
+    8: "C4",
+    9: "A3",
+    10: ""
+};
+        // if (y == '0') note = "G5";
+        // if (y == '1') note = "E5";
+        // if (y == '2') note = "D5";
+        // if (y == '3') note = "C5";
+        // if (y == '4') note = "A4";
+        // if (y == '5') note = "G4";
+        // if (y == '6') note = "E4";
+        // if (y == '7') note = "D4";
+        // if (y == '8') note = "C4";
+        // if (y == '9') note = "A3";
+        // if (y == '10') note = "G3";
+        // if (y == '11') note = "E3";
+        // if (y == '12') note = "D3";
+        // if (y == '13') note = "C3";
+        // if (y == '14') note = "A2";
+        // if (y == '15') note = "G2";
+
+var loopEvent = jQuery.Event('loop');
+
+$('body').on('loop', function () {
+    console.log('loop!');
+});
 
 // ********** RULE 30 **********
 rule30 = {
@@ -50,6 +84,17 @@ rule150.resurrect.alive = [{left: false, right: false}, {left: true, right: true
 rule150.resurrect.dead = [{left: false, right: true}, {left: true, right: false}];
 rule150.kill.alive = [{left: false, right: true}, {left: true, right: false}];
 rule150.kill.dead = [{left: false, right: false}, {left: true, right: true}];
+
+var selectedRule = rule30;
+
+$('#rule').on('change', function () {
+    var val = $('#rule option:selected').val();
+    if (val == 30) selectedRule = rule30;
+    if (val == 54) selectedRule = rule54;
+    if (val == 90) selectedRule = rule54;
+    if (val == 150) selectedRule = rule150;
+    console.log("selected rule: ", selectedRule);
+});
 
 var gameUtilities = {
     selectCellWithCoordinates: function (x, y) {
@@ -96,7 +141,6 @@ var gameUtilities = {
             gameUtilities.setStatus(cell, 'dead');
         } else {
             var note = gameUtilities.getNote(cell);
-            synth.triggerAttackRelease(note, 0.2);
             gameUtilities.setStatus(cell, 'alive');
             gameUtilities.setNoteClass(cell, note);
         }
@@ -293,14 +337,14 @@ var gameOfLife = {
                 if (isAliveConditionMet || isDeadConditionMet) gameUtilities.killCell(nextCell);
             }
 
-            evaluateRuleSet (rule54, cell);
+            evaluateRuleSet (selectedRule, cell);
         });
 
         if (currentX === this.width - 2) {
             console.log("end of the board!");
             currentX = 0;
             loopCount++;
-            console.log("loopCount: ", loopCount);
+            $('body').trigger('loop');
             return;
         }
 
