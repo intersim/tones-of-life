@@ -20,6 +20,8 @@ synth.set({
     }
 });
 
+var scale = {};
+
 var gameUtilities = {
     selectCellWithCoordinates: function (x, y) {
         return document.getElementById(x + '-' + y);
@@ -73,6 +75,7 @@ var gameUtilities = {
         if (!cell) return;
 
         var note = gameUtilities.getNote(cell);
+        synth.triggerAttackRelease(note, 0.2);
         gameUtilities.setStatus(cell, 'alive');
         gameUtilities.setNoteClass(cell, note);
     },
@@ -122,8 +125,8 @@ var gameUtilities = {
 var currentX = 0;
 
 var gameOfLife = {
-    width: 5,
-    height: 5,
+    width: 22,
+    height: 11,
     stepInterval: null,
 
     createAndShowBoard: function () {
@@ -135,7 +138,7 @@ var gameOfLife = {
         for (var h = 0; h < this.height; h++) {
             tablehtml += "<tr id='row+" + h + "'>";
             for (var w = 0; w < this.width; w++) {
-                if (w === 0 && h === 2) {
+                if (w === 0 && h === 5) {
                     tablehtml += "<td data-status='alive' class='alive " + gameUtilities.setNote(h) + "' data-note='" + gameUtilities.setNote(h) + "' id='" + w + "-" + h + "'></td>";
                 }
                 else tablehtml += "<td data-status='dead' data-note='" + gameUtilities.setNote(h) + "' id='" + w + "-" + h + "'></td>";
@@ -186,9 +189,10 @@ var gameOfLife = {
     },
 
     forEachCellInColumn: function (currentX, iteratorFunc) {
-        var cellElements = this.getThisColumn(currentX, 5);
+        var cellElements = this.getThisColumn(currentX, 11);
 
         [].slice.call(cellElements).forEach(function (cellElement) {
+            if (!cellElement) return;
             var idHalves = cellElement.id.split('-');
             iteratorFunc(cellElement, parseInt(idHalves[0], 10), parseInt(idHalves[1], 10));
         });
@@ -209,7 +213,8 @@ var gameOfLife = {
         document.getElementById('step_btn').addEventListener('click', this.step.bind(this));
         document.getElementById('clear_btn').addEventListener('click', this.clearBoard.bind(this));
         document.getElementById('fill_btn').addEventListener('click', this.fillBoard.bind(this));
-        document.getElementById('play_btn').addEventListener('click', this.enableAutoPlay.bind(this));
+        // document.getElementById('play_btn').addEventListener('click', this.enableAutoPlay.bind(this));
+        document.getElementById('autoplay_btn').addEventListener('click', this.enableAutoPlay.bind(this));
         document.getElementById('col_btn').addEventListener('click', this.getFirstColumn(5, 5));
     },
 
@@ -285,8 +290,8 @@ var gameOfLife = {
 
                 var cellStatus = gameUtilities.getStatus(cell);
                 var neighbors = gameUtilities.getNeighbors(cell);
-                var leftStatus = gameUtilities.getStatus(neighbors[1])/* || 'dead'*/;
-                var rightStatus = gameUtilities.getStatus(neighbors[0])/* || 'dead'*/;
+                var leftStatus = gameUtilities.getStatus(neighbors[1]) || 'dead';
+                var rightStatus = gameUtilities.getStatus(neighbors[0]) || 'dead';
                 var nextRow = gameUtilities.getNextRow(cell);
                 var nextCell = nextRow[1];
 
@@ -305,7 +310,7 @@ var gameOfLife = {
                 if (isAliveConditionMet || isDeadConditionMet) gameUtilities.killCell(nextCell);
             }
 
-            evaluateRuleSet (rule90, cell);
+            evaluateRuleSet (rule30, cell);
         });
             currentX++;
             console.log("currentX: ", currentX);
