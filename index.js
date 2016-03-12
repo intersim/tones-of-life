@@ -15,8 +15,12 @@
 var synth = new Tone.PolySynth(10, Tone.Monosynth).toMaster(); // 10 is the height of the board; make variable in future?
 
 synth.set({
+    "type" : "sine",
     "envelope" : {
-        "attack" : 0.1
+        "attack": 0.005,
+        "decay": 0.1,
+        "sustain": 0.3,
+        "release": 1
     }
 });
 
@@ -125,7 +129,7 @@ var gameUtilities = {
 var currentX = 0;
 
 var gameOfLife = {
-    width: 22,
+    width: 17,
     height: 11,
     stepInterval: null,
 
@@ -210,12 +214,13 @@ var gameOfLife = {
 
         document.getElementById('step_btn').addEventListener('click', this.step.bind(this));
         document.getElementById('clear_btn').addEventListener('click', this.clearBoard.bind(this));
-        document.getElementById('fill_btn').addEventListener('click', this.fillBoard.bind(this));
+        // document.getElementById('fill_btn').addEventListener('click', this.fillBoard.bind(this));
         // document.getElementById('play_btn').addEventListener('click', this.enableAutoPlay.bind(this));
         document.getElementById('autoplay_btn').addEventListener('click', this.enableAutoPlay.bind(this));
     },
 
     clearBoard: function () {
+        this.stop();
         this.forEachCell(function (cell) {
             currentX = 0;
             gameUtilities.setStatus(cell, 'dead');
@@ -307,9 +312,17 @@ var gameOfLife = {
                 if (isAliveConditionMet || isDeadConditionMet) gameUtilities.killCell(nextCell);
             }
 
-            evaluateRuleSet (rule90, cell);
+            evaluateRuleSet (rule54, cell);
         });
-            currentX++;
+        console.log("currentX: ", currentX);
+
+        if (currentX === this.width - 2) {
+            console.log("end of the board!");
+            currentX = 0;
+            return;
+        }
+
+        currentX++;
     },
 
     fillBoard: function () {
@@ -323,6 +336,7 @@ var gameOfLife = {
     stepInterval: null,
 
     stop: function () {
+        console.log("autoplay stopping!");
         if (this.stepInterval) {
             clearInterval(this.stepInterval);
             this.stepInterval = null;
@@ -330,6 +344,7 @@ var gameOfLife = {
     },
 
     enableAutoPlay: function () {
+        console.log("clicked autoplay!");
         if (!this.stepInterval) {
             this.stepInterval = setInterval(this.step.bind(this), 400);
         } else {
