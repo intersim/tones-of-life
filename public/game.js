@@ -294,7 +294,7 @@ var gameUtilities = {
             var note = gameUtilities.getNote(cell);
             selectedInstr.triggerAttackRelease(note, 0.2);
             gameUtilities.setStatus(cell, 'alive');
-            gameUtilities.setScaleClass(cell, scale);
+            // gameUtilities.setScaleClass(cell, scale);
         }
     },
     killCell: function (cell) {
