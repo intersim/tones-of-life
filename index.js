@@ -8,6 +8,67 @@ var synth = new Tone.PolySynth(16, Tone.SimpleSynth, {
             }
         }).toMaster();
 
+// var marimba = new Sampler({
+//     "A" : {
+//         2 : "./samples/marimba/Marimba.yarn.ff.A2.stereo.aif",
+//         3 : "./samples/marimba/Marimba.yarn.ff.A3.stereo.aif",
+//         4 : "./samples/marimba/Marimba.yarn.ff.A4.stereo.aif"
+//         },
+//     "Bb" : {
+//         2 : "./samples/marimba/Marimba.yarn.ff.Bb2.stereo.aif",
+//         3 : "./samples/marimba/Marimba.yarn.ff.Bb3.stereo.aif",
+//         4 : "./samples/marimba/Marimba.yarn.ff.Bb4.stereo.aif"
+//         },
+//     "B" : {
+//         2 : "./samples/marimba/Marimba.yarn.ff.B2.stereo.aif",
+//         3 : "./samples/marimba/Marimba.yarn.ff.B3.stereo.aif",
+//         4 : "./samples/marimba/Marimba.yarn.ff.B4.stereo.aif"
+//         },
+//     "C" : {
+//         2 : "./samples/marimba/Marimba.yarn.ff.C2.stereo.aif",
+//         3 : "./samples/marimba/Marimba.yarn.ff.C3.stereo.aif",
+//         4 : "./samples/marimba/Marimba.yarn.ff.C4.stereo.aif";
+//         5 : "./samples/marimba/Marimba.yarn.ff.C5.stereo.aif"
+//         },
+//     "D" : {
+//         2 : "./samples/marimba/Marimba.yarn.ff.D2.stereo.aif",
+//         3 : "./samples/marimba/Marimba.yarn.ff.D3.stereo.aif",
+//         4 : "./samples/marimba/Marimba.yarn.ff.D4.stereo.aif",
+//         5 : "./samples/marimba/Marimba.yarn.ff.D5.stereo.aif"
+//         },
+//     "Eb" : {
+//         2 : "./samples/marimba/Marimba.yarn.ff.Eb2.stereo.aif",
+//         3 : "./samples/marimba/Marimba.yarn.ff.Eb3.stereo.aif",
+//         4 : "./samples/marimba/Marimba.yarn.ff.Eb4.stereo.aif",
+//         5 : "./samples/marimba/Marimba.yarn.ff.Eb5.stereo.aif"
+//         },
+//     "E" : {
+//         2 : "./samples/marimba/Marimba.yarn.ff.E2.stereo.aif",
+//         3 : "./samples/marimba/Marimba.yarn.ff.E3.stereo.aif",
+//         4 : "./samples/marimba/Marimba.yarn.ff.E4.stereo.aif",
+//         5 : "./samples/marimba/Marimba.yarn.ff.E5.stereo.aif"
+//         },
+//     "G" : {
+//         2 : "./samples/marimba/Marimba.yarn.ff.G2.stereo.aif",
+//         3 : "./samples/marimba/Marimba.yarn.ff.G3.stereo.aif",
+//         4 : "./samples/marimba/Marimba.yarn.ff.G4.stereo.aif",
+//         5 : "./samples/marimba/Marimba.yarn.ff.G5.stereo.aif"
+//         }
+// }).toMaster();
+
+// getSamplerNote: 
+// var str = gameUtilities.getNote(cell)
+// str.length == 3 ? var newStr = str[0] + "." + str[1] : var newStr = str.substr(0, 1) + "." + str[2];
+// return newStr;
+
+// var cells = document.getElementsByTagName('td');
+//     var cellsArr = [].slice.call(cells);
+//     [].slice.call(cells).forEach(function(cell){
+//         gameUtilities.setNewNote(cell)   
+//     }
+
+// marimba.triggerAttack(note, time, velocity);
+
 // ********** Scales **********
 
 var pentatonicScale = {
@@ -49,22 +110,22 @@ var mixoScale = {
 };
 
 var minorPentatonicScale = {
-    0: "A5",
-    1: "F5",
-    2: "E5",
+    0: "G5",
+    1: "Eb5",
+    2: "D5",
     3: "C5",
-    4: "B4",
-    5: "A4",
-    6: "F4",
-    7: "E4",
+    4: "A4",
+    5: "G4",
+    6: "Eb4",
+    7: "D4",
     8: "C4",
-    9: "B3",
-    10: "A3",
-    11: "F3",
-    12: "E3",
+    9: "A3",
+    10: "G3",
+    11: "Eb3",
+    12: "D3",
     13: "C3",
-    14: "B2",
-    15: "A2"
+    14: "A2",
+    15: "G2"
 };
 
 var scale = pentatonicScale;
