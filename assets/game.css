@@ -25,11 +25,15 @@ td.dead {
   text-align: center;
 }
 
-td.Bb {
-  background-color: #999999;
+td.A5 {
+  background-color: purple;
 }
 
 td.G5 {
+  background-color: #5BC0EB;
+}
+
+td.F5 {
   background-color: #5BC0EB;
 }
 
@@ -45,11 +49,23 @@ td.C5 {
   background-color: #E55934;
 }
 
+td.B4 {
+  background-color: #FA7921;
+}
+
+td.Bb4 {
+  background-color: #FA7921;
+}
+
 td.A4 {
   background-color: #FA7921;
 }
 
 td.G4 {
+  background-color: purple;
+}
+
+td.F4 {
   background-color: purple;
 }
 
@@ -65,6 +81,14 @@ td.C4 {
   background-color: #2274A5;
 }
 
+td.B3 {
+  background-color: green;
+}
+
+td.Bb3 {
+  background-color: green;
+}
+
 td.A3 {
   background-color: green;
 }
@@ -73,7 +97,11 @@ td.G3 {
   background-color: #FFBF00;
 }
 
-/* change these colors... */
+td.F3 {
+  background-color: #FFBF00;
+}
+
+/* change these colors? */
 
 td.E3 {
   background-color: #E83F6F;
@@ -85,6 +113,14 @@ td.D3 {
 
 td.C3 {
   background-color: #2274A5;
+}
+
+td.B2 {
+  background-color: green;
+}
+
+td.Bb2 {
+  background-color: green;
 }
 
 td.A2 {
