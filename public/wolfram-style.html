@@ -4,6 +4,10 @@
   <title>Tones Of Life</title>
   <link rel="stylesheet" href="./assets/bootstrap.min.css">
   <link rel="stylesheet" href="./assets/game.css">
+
+  <script src="../assets/Tone.min.js" type="text/javascript" defer></script>
+  <script src="../assets/jquery-2.2.1.js" type="text/javascript" defer></script>
+  <script src="./game.js" type="text/javascript" defer></script>
 </head>
 <body>
 
@@ -25,7 +29,7 @@
 
     <select id="instrument">
       <option value="synth">Synth</option>
-      <option value="marimba">Marimba</option>
+      <option value="marimba" disabled>Marimba</option>
     </select>
 
     <select id="bpm">
@@ -48,12 +52,10 @@
   <footer class="footer">
     <div class="container">
       <p class="text-muted">Inspired by Stephen Wolfram's <a href="http://tones.wolfram.com/">Wolftones</a></p>
+      <p class="text-muted">Marimba samples from <a href="http://theremin.music.uiowa.edu/index.html">University of Iowa Electronic Music Studios</a></p>
       <p class="text-muted">Built using <a href="https://github.com/Tonejs/Tone.js">Tone.js</a> by Emily at <a href="http://www.gracehopper.com/">Grace Hopper Academy</a></p>
     </div>
   </footer>
 
-  <script src="./assets/Tone.min.js" type="text/javascript"></script>
-  <script src="./assets/jquery-2.2.1.js" type="text/javascript"></script>
-  <script src="./index.js" type="text/javascript"></script>
 </body>
 </html>

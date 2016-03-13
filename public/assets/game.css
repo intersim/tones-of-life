@@ -1,0 +1,43 @@
+body {
+  padding: 10px;
+}
+
+h1, h2, h3 {
+  text-align: center;
+}
+
+#board {
+  margin: 0 auto;
+}
+
+#board td {
+  border: 1px solid #ddd;
+  width: 18px;
+  height: 18px;
+}
+
+td.dead {
+  background-color: #fff;
+}
+
+#control_panel {
+  margin: 10px auto;
+  text-align: center;
+}
+
+td.alive {
+  background-color: #999999;
+}
+
+/*
+td.pentatonic {
+  background-color: #E83F6F;
+}
+
+td.mixolydian {
+  background-color: #32936F;
+}
+
+td.minor {
+  background-color: #2274A5;
+}*/
