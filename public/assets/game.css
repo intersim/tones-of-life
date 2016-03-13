@@ -26,10 +26,9 @@ td.dead {
 }
 
 td.alive {
-  background-color: #999999;
+  background-color: #555555;
 }
 
-/*
 td.pentatonic {
   background-color: #E83F6F;
 }
@@ -40,4 +39,4 @@ td.mixolydian {
 
 td.minor {
   background-color: #2274A5;
-}*/
+}

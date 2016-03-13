@@ -82,6 +82,7 @@ var selectedInstr = synth;
 // ********** Scales **********
 
 var pentatonicScale = {
+    name: "pentatonic",
     0: "G5",
     1: "E5",
     2: "D5",
@@ -101,6 +102,7 @@ var pentatonicScale = {
 };
 
 var mixoScale = {
+    name: "mixolydian",
     0: "G5",
     1: "E5",
     2: "D5",
@@ -120,6 +122,7 @@ var mixoScale = {
 };
 
 var minorPentatonicScale = {
+    name: "minor",
     0: "G5",
     1: "Eb5",
     2: "D5",
@@ -150,7 +153,7 @@ $('#scale').on('change', function () {
     var cellsArr = [].slice.call(cells);
 
     [].slice.call(cells).forEach(function(cell){
-        gameUtilities.setNewNote(cell)   
+        gameUtilities.setNewNote(cell);
     });
 });
 
@@ -267,9 +270,11 @@ var gameUtilities = {
         if (y == '15') note = scale[15];
         return note;
     },
-    // setScaleClass: function(cell, scale) {
-    //     cell.className = scale.toString();
-    // },
+    setScaleClass: function(cell, scale) {
+        console.log('scale name: ', scale.name);
+        cell.className = scale.name;
+        console.log("updated cell: ", cell);
+    },
     setNewNote: function(cell) {
         var cellCoords = gameUtilities.getCellCoords(cell);
         var cellX = cellCoords.x;
@@ -286,7 +291,7 @@ var gameUtilities = {
             var note = gameUtilities.getNote(cell);
             selectedInstr.triggerAttackRelease(note, 0.2);
             gameUtilities.setStatus(cell, 'alive');
-            // gameUtilities.setScaleClass(cell, scale);
+            gameUtilities.setScaleClass(cell, scale);
         }
     },
     killCell: function (cell) {
@@ -299,7 +304,7 @@ var gameUtilities = {
         var note = gameUtilities.getNote(cell);
         selectedInstr.triggerAttackRelease(note, 0.2);
         gameUtilities.setStatus(cell, 'alive');
-        // gameUtilities.setNoteClass(cell, note);
+        gameUtilities.setScaleClass(cell, scale);
     },
     getCellCoords: function (cell) {
         var idSplit = cell.id.split('-');
@@ -361,7 +366,7 @@ var gameOfLife = {
             tablehtml += "<tr id='row+" + h + "'>";
             for (var w = 0; w < this.width; w++) {
                 if (w === 0 && h === Math.floor(this.height/2)) {
-                    tablehtml += "<td data-status='alive' class='alive " + gameUtilities.setNote(h) + "' data-note='" + gameUtilities.setNote(h) + "' id='" + w + "-" + h + "'></td>";
+                    tablehtml += "<td data-status='alive' class='alive' data-note='" + gameUtilities.setNote(h) + "' id='" + w + "-" + h + "'></td>";
                 }
                 else tablehtml += "<td data-status='dead' data-note='" + gameUtilities.setNote(h) + "' id='" + w + "-" + h + "'></td>";
             }
