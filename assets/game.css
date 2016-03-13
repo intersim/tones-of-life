@@ -25,6 +25,10 @@ td.dead {
   text-align: center;
 }
 
+td.Bb {
+  background-color: #999999;
+}
+
 td.G5 {
   background-color: #5BC0EB;
 }

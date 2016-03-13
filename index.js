@@ -3,7 +3,14 @@ var loopCount = 0;
 
 var synth = new Tone.PolySynth(16, Tone.Monosynth).toMaster();
 
-synth.set("envelope.attack", 0.04);
+synth.volume.value = -12;
+
+synth.set({
+            "attack" : 0.11,
+            "decay" : 0.21,
+            "sustain" : 0.09,
+            "release" : 1.2
+        });
 
 var pentatonicScale = {
     0: "G5",
@@ -16,24 +23,67 @@ var pentatonicScale = {
     7: "D4",
     8: "C4",
     9: "A3",
-    10: ""
+    10: "G3",
+    11: "E3",
+    12: "D3",
+    13: "C3",
+    14: "A2",
+    15: "G2"
 };
-        // if (y == '0') note = "G5";
-        // if (y == '1') note = "E5";
-        // if (y == '2') note = "D5";
-        // if (y == '3') note = "C5";
-        // if (y == '4') note = "A4";
-        // if (y == '5') note = "G4";
-        // if (y == '6') note = "E4";
-        // if (y == '7') note = "D4";
-        // if (y == '8') note = "C4";
-        // if (y == '9') note = "A3";
-        // if (y == '10') note = "G3";
-        // if (y == '11') note = "E3";
-        // if (y == '12') note = "D3";
-        // if (y == '13') note = "C3";
-        // if (y == '14') note = "A2";
-        // if (y == '15') note = "G2";
+
+var mixoScale = {
+    0: "G5",
+    1: "E5",
+    2: "D5",
+    3: "C5",
+    4: "Bb4",
+    5: "G4",
+    6: "E4",
+    7: "D4",
+    8: "C4",
+    9: "Bb3",
+    10: "G3",
+    11: "E3",
+    12: "D3",
+    13: "C3",
+    14: "Bb2",
+    15: "G2"
+};
+
+var minorPentatonicScale = {
+    0: "A5",
+    1: "F5",
+    2: "E5",
+    3: "C5",
+    4: "B4",
+    5: "A4",
+    6: "F4",
+    7: "E4",
+    8: "C4",
+    9: "B3",
+    10: "A3",
+    11: "F3",
+    12: "E3",
+    13: "C3",
+    14: "B2",
+    15: "A2"
+};
+
+var scale = pentatonicScale;
+
+$('#scale').on('change', function () {
+    var val = $('#scale option:selected').val();
+    if (val == "pen") scale = pentatonicScale;
+    if (val == "mix") scale = mixoScale;
+    if (val == "min") scale = minorPentatonicScale;
+
+    var cells = document.getElementsByTagName('td');
+    var cellsArr = [].slice.call(cells);
+
+    [].slice.call(cells).forEach(function(cell){
+        gameUtilities.setNewNote(cell)   
+    });
+});
 
 var loopEvent = jQuery.Event('loop');
 
@@ -91,9 +141,8 @@ $('#rule').on('change', function () {
     var val = $('#rule option:selected').val();
     if (val == 30) selectedRule = rule30;
     if (val == 54) selectedRule = rule54;
-    if (val == 90) selectedRule = rule54;
+    if (val == 90) selectedRule = rule90;
     if (val == 150) selectedRule = rule150;
-    console.log("selected rule: ", selectedRule);
 });
 
 var gameUtilities = {
@@ -113,26 +162,33 @@ var gameUtilities = {
         return cell.getAttribute('data-note');
     },
     setNote: function (y) {
-        if (y == '0') note = "G5";
-        if (y == '1') note = "E5";
-        if (y == '2') note = "D5";
-        if (y == '3') note = "C5";
-        if (y == '4') note = "A4";
-        if (y == '5') note = "G4";
-        if (y == '6') note = "E4";
-        if (y == '7') note = "D4";
-        if (y == '8') note = "C4";
-        if (y == '9') note = "A3";
-        if (y == '10') note = "G3";
-        if (y == '11') note = "E3";
-        if (y == '12') note = "D3";
-        if (y == '13') note = "C3";
-        if (y == '14') note = "A2";
-        if (y == '15') note = "G2";
+        if (y == '0') note = scale[0];
+        if (y == '1') note = scale[1];
+        if (y == '2') note = scale[2];
+        if (y == '3') note = scale[3];
+        if (y == '4') note = scale[4];
+        if (y == '5') note = scale[5];
+        if (y == '6') note = scale[6];
+        if (y == '7') note = scale[7];
+        if (y == '8') note = scale[8];
+        if (y == '9') note = scale[9];
+        if (y == '10') note = scale[10];
+        if (y == '11') note = scale[11];
+        if (y == '12') note = scale[12];
+        if (y == '13') note = scale[13];
+        if (y == '14') note = scale[14];
+        if (y == '15') note = scale[15];
         return note;
     },
     setNoteClass: function(cell, note) {
         cell.className = note;
+    },
+    setNewNote: function(cell) {
+        var cellCoords = gameUtilities.getCellCoords(cell);
+        var cellX = cellCoords.x;
+        var cellY = cellCoords.y;
+        var newNote = gameUtilities.setNote(cellY);
+        cell.dataset.note = newNote;
     },
     toggleStatus: function (cell) {
         if (!cell) return;
@@ -141,6 +197,7 @@ var gameUtilities = {
             gameUtilities.setStatus(cell, 'dead');
         } else {
             var note = gameUtilities.getNote(cell);
+            synth.triggerAttackRelease(note, 0.2);
             gameUtilities.setStatus(cell, 'alive');
             gameUtilities.setNoteClass(cell, note);
         }
