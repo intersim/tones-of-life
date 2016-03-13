@@ -1,16 +1,14 @@
 var currentX = 0;
 var loopCount = 0;
 
-var synth = new Tone.PolySynth(16, Tone.Monosynth).toMaster();
+// ********** Instrument **********
+var synth = new Tone.PolySynth(16, Tone.SimpleSynth, {
+            "oscillator" : {
+                "partials" : [0, 2, 3, 4],
+            }
+        }).toMaster();
 
-synth.volume.value = -12;
-
-synth.set({
-            "attack" : 0.11,
-            "decay" : 0.21,
-            "sustain" : 0.09,
-            "release" : 1.2
-        });
+// ********** Scales **********
 
 var pentatonicScale = {
     0: "G5",
@@ -85,13 +83,29 @@ $('#scale').on('change', function () {
     });
 });
 
+// ********** Looping **********
+
 var loopEvent = jQuery.Event('loop');
 
 $('body').on('loop', function () {
     console.log('loop!');
 });
 
-// ********** RULE 30 **********
+// ********** BPM **********
+
+var selectedBPM = 300;
+
+$('#bpm').on('change', function () {
+    var val = $('#bpm option:selected').val();
+    if (val == 120) selectedBPM = 250;
+    if (val == 100) selectedBPM = 300;
+    if (val == 80) selectedBPM = 375;
+    if (val == 60) selectedBPM = 500;
+    console.log(selectedBPM);
+});
+
+// ********** Rules: **********
+// ********** Rule 30 **********
 rule30 = {
     resurrect: {},
     kill: {}
@@ -102,7 +116,7 @@ rule30.resurrect.dead = [{left: true, right: false}, {left: false, right: true}]
 rule30.kill.alive = [{left: true, right: false}, {left: true, right: true}];
 rule30.kill.dead = [{left: false, right: false}, {right: true, left: true}];
 
-// ********** RULE 54 **********
+// ********** Rule 54 **********
 rule54 = {
     resurrect: {},
     kill: {}
@@ -113,7 +127,7 @@ rule54.resurrect.dead = [{left: false, right: true}, {left: true, right: false},
 rule54.kill.alive = [{left: false, right: true}, {left: true, right: false}, {left: true, right: true}];
 rule54.kill.dead = [{left: false, right: false}];
 
-// ********** RULE 90 **********
+// ********** Rule 90 **********
 rule90 = {
     resurrect: {},
     kill: {}
@@ -124,7 +138,7 @@ rule90.resurrect.dead = [{left: false, right: true}, {left: true, right: false}]
 rule90.kill.alive = [{left: false, right: false}, {left: true, right: true}];
 rule90.kill.dead = [{left: false, right: false}, {left: true, right: true}];
 
-// ********** RULE 150 **********
+// ********** Rule 150 **********
 rule150 = {
     resurrect: {},
     kill: {}
@@ -144,6 +158,8 @@ $('#rule').on('change', function () {
     if (val == 90) selectedRule = rule90;
     if (val == 150) selectedRule = rule150;
 });
+
+// ********** Game Utilities **********
 
 var gameUtilities = {
     selectCellWithCoordinates: function (x, y) {
@@ -256,6 +272,8 @@ var gameUtilities = {
     }
 
 };
+
+// ********** Game Board **********
 
 var gameOfLife = {
     width: 17,
@@ -426,10 +444,19 @@ var gameOfLife = {
         }
     },
 
+    fill: function () {
+        console.log("clicked autoplay!");
+        if (!this.stepInterval) {
+            this.stepInterval = setInterval(this.step.bind(this), selectedBPM);
+        } else {
+            this.stop();
+        }
+    },
+
     enableAutoPlay: function () {
         console.log("clicked autoplay!");
         if (!this.stepInterval) {
-            this.stepInterval = setInterval(this.step.bind(this), 400);
+            this.stepInterval = setInterval(this.step.bind(this), selectedBPM);
         } else {
             this.stop();
         }
