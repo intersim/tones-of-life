@@ -11,73 +11,69 @@ var synth = new Tone.PolySynth(16, Tone.SimpleSynth, {
 
 var selectedInstr = synth;
 
-// var marimba = new Tone.PolySynth(8, Tone.Sampler, {
-//     "A" : {
-//         2 : "./samples/marimba/ogg/Marimba.yarn.ff.A2.stereo.ogg",
-//         3 : "./samples/marimba/ogg/Marimba.yarn.ff.A3.stereo.ogg",
-//         4 : "./samples/marimba/ogg/Marimba.yarn.ff.A4.stereo.ogg"
-//         },
-//     // "Bb" : {
-//     //     3 : "./samples/marimba/ogg/Marimba.yarn.ff.Bb3.stereo.ogg",
-//     //     4 : "./samples/marimba/ogg/Marimba.yarn.ff.Bb4.stereo.ogg"
-//     //     },
-//     // "B" : {
-//     //     3 : "./samples/marimba/ogg/Marimba.yarn.ff.B3.stereo.ogg",
-//     //     4 : "./samples/marimba/ogg/Marimba.yarn.ff.B4.stereo.ogg"
-//     //     },
-//     "C" : {
-//         3 : "./samples/marimba/ogg/Marimba.yarn.ff.C3.stereo.ogg",
-//         4 : "./samples/marimba/ogg/Marimba.yarn.ff.C4.stereo.ogg",
-//         5 : "./samples/marimba/ogg/Marimba.yarn.ff.C5.stereo.ogg"
-//         },
-//     "D" : {
-//         3 : "./samples/marimba/ogg/Marimba.yarn.ff.D3.stereo.ogg",
-//         4 : "./samples/marimba/ogg/Marimba.yarn.ff.D4.stereo.ogg",
-//         5 : "./samples/marimba/ogg/Marimba.yarn.ff.D5.stereo.ogg"
-//         },
-//     // "Eb" : {
-//     //     3 : "./samples/marimba/ogg/Marimba.yarn.ff.Eb3.stereo.ogg",
-//     //     4 : "./samples/marimba/ogg/Marimba.yarn.ff.Eb4.stereo.ogg",
-//     //     5 : "./samples/marimba/ogg/Marimba.yarn.ff.Eb5.stereo.ogg"
-//     //     },
-//     "E" : {
-//         3 : "./samples/marimba/ogg/Marimba.yarn.ff.E3.stereo.ogg",
-//         4 : "./samples/marimba/ogg/Marimba.yarn.ff.E4.stereo.ogg",
-//         5 : "./samples/marimba/ogg/Marimba.yarn.ff.E5.stereo.ogg"
-//         },
-//     "G" : {
-//         2 : "./samples/marimba/ogg/Marimba.yarn.ff.G2.stereo.ogg",
-//         3 : "./samples/marimba/ogg/Marimba.yarn.ff.G3.stereo.ogg",
-//         4 : "./samples/marimba/ogg/Marimba.yarn.ff.G4.stereo.ogg",
-//         5 : "./samples/marimba/ogg/Marimba.yarn.ff.G5.stereo.ogg"
-//         }
-// }).toMaster();
-
-// $(document).ready(function() {
-//     $.ajax({
-//         url: "./samples/marimba/ogg/Marimba.yarn.ff.C4.stereo.ogg",
-//         success: function() {
-//             marimba.triggerAttack('C.4');
-//         }
-//     });
-// });
+var marimba = new Tone.PolySynth(8, Tone.Sampler, {
+    "A" : {
+        2 : "./samples/marimba/ogg/Marimba.yarn.ff.A2.stereo.ogg",
+        3 : "./samples/marimba/ogg/Marimba.yarn.ff.A3.stereo.ogg",
+        4 : "./samples/marimba/ogg/Marimba.yarn.ff.A4.stereo.ogg"
+        },
+    // "Bb" : {
+    //     3 : "./samples/marimba/ogg/Marimba.yarn.ff.Bb3.stereo.ogg",
+    //     4 : "./samples/marimba/ogg/Marimba.yarn.ff.Bb4.stereo.ogg"
+    //     },
+    // "B" : {
+    //     3 : "./samples/marimba/ogg/Marimba.yarn.ff.B3.stereo.ogg",
+    //     4 : "./samples/marimba/ogg/Marimba.yarn.ff.B4.stereo.ogg"
+    //     },
+    "C" : {
+        3 : "./samples/marimba/ogg/Marimba.yarn.ff.C3.stereo.ogg",
+        4 : "./samples/marimba/ogg/Marimba.yarn.ff.C4.stereo.ogg",
+        5 : "./samples/marimba/ogg/Marimba.yarn.ff.C5.stereo.ogg"
+        },
+    "D" : {
+        3 : "./samples/marimba/ogg/Marimba.yarn.ff.D3.stereo.ogg",
+        4 : "./samples/marimba/ogg/Marimba.yarn.ff.D4.stereo.ogg",
+        5 : "./samples/marimba/ogg/Marimba.yarn.ff.D5.stereo.ogg"
+        },
+    // "Eb" : {
+    //     3 : "./samples/marimba/ogg/Marimba.yarn.ff.Eb3.stereo.ogg",
+    //     4 : "./samples/marimba/ogg/Marimba.yarn.ff.Eb4.stereo.ogg",
+    //     5 : "./samples/marimba/ogg/Marimba.yarn.ff.Eb5.stereo.ogg"
+    //     },
+    "E" : {
+        3 : "./samples/marimba/ogg/Marimba.yarn.ff.E3.stereo.ogg",
+        4 : "./samples/marimba/ogg/Marimba.yarn.ff.E4.stereo.ogg",
+        5 : "./samples/marimba/ogg/Marimba.yarn.ff.E5.stereo.ogg"
+        },
+    "G" : {
+        2 : "./samples/marimba/ogg/Marimba.yarn.ff.G2.stereo.ogg",
+        3 : "./samples/marimba/ogg/Marimba.yarn.ff.G3.stereo.ogg",
+        4 : "./samples/marimba/ogg/Marimba.yarn.ff.G4.stereo.ogg",
+        5 : "./samples/marimba/ogg/Marimba.yarn.ff.G5.stereo.ogg"
+        }
+}).toMaster();
 
 // Tone.Buffer.on('load', function () {
 //     console.log("trying to get samples working...");
 //     marimba.triggerAttack(['C.4', 'E.4', 'G.4']);
 // });
 
-// function getSamplerNote (cell) { 
-//     var str = gameUtilities.getNote(cell)
-//     str.length == 2 ? newStr = str[0] + "." + str[1] : newStr = str.substr(0, 1) + "." + str[2];
-//     return newStr;
-// }
+// $('#instrument').on('change', function () {
+//     var val = $('#instrument option:selected').val();
+//     if (val == "synth") selectedInstr = synth;
+//     if (val == "marimba") selectedInstr = marimba;
 
-// var cells = document.getElementsByTagName('td');
+//     var cells = document.getElementsByTagName('td');
 //     var cellsArr = [].slice.call(cells);
-//     [].slice.call(cells).forEach(function(cell){
-//         gameUtilities.setNewNote(cell)   
-//     }
+
+//     var cells = document.getElementsByTagName('td');
+//     var cellsArr = [].slice.call(cells);
+//     cellsArr.forEach(function(cell){
+//         gameUtilities.setSamplerNote(cell);
+//     })
+
+//     // getting this err when trying to select marimba: Tone.min.js:12 Uncaught TypeError: Failed to set the 'buffer' property on 'AudioBufferSourceNode': The provided value is not of type 'AudioBuffer'
+// });
 
 // ********** Scales **********
 
@@ -152,7 +148,7 @@ $('#scale').on('change', function () {
     var cells = document.getElementsByTagName('td');
     var cellsArr = [].slice.call(cells);
 
-    [].slice.call(cells).forEach(function(cell){
+    cellsArr.forEach(function(cell){
         gameUtilities.setNewNote(cell);
     });
 });
@@ -271,15 +267,22 @@ var gameUtilities = {
         return note;
     },
     setScaleClass: function(cell, scale) {
-        console.log('scale name: ', scale.name);
         cell.className = scale.name;
-        console.log("updated cell: ", cell);
     },
     setNewNote: function(cell) {
         var cellCoords = gameUtilities.getCellCoords(cell);
         var cellX = cellCoords.x;
         var cellY = cellCoords.y;
         var newNote = gameUtilities.setNote(cellY);
+        cell.dataset.note = newNote;
+    },
+    getSamplerNote: function(cell) { 
+        var str = gameUtilities.getNote(cell)
+        str.length == 2 ? newStr = str[0] + "." + str[1] : newStr = str.substr(0, 1) + "." + str[2];
+        return newStr;
+    },
+    setSamplerNote: function(cell) {
+        var newNote = gameUtilities.getSamplerNote(cell);
         cell.dataset.note = newNote;
     },
     toggleStatus: function (cell) {
@@ -502,13 +505,13 @@ var gameOfLife = {
         currentX++;
     },
 
-    fillBoard: function () {
-        var i = 0;
-        while (i < 63) {
-          this.step.bind(this)();
-          i++;
-        }
-    },
+    // fillBoard: function () {
+    //     var i = 0;
+    //     while (i < 63) {
+    //       this.step.bind(this)();
+    //       i++;
+    //     }
+    // },
 
     stepInterval: null,
 
@@ -517,15 +520,6 @@ var gameOfLife = {
         if (this.stepInterval) {
             clearInterval(this.stepInterval);
             this.stepInterval = null;
-        }
-    },
-
-    fill: function () {
-        console.log("clicked autoplay!");
-        if (!this.stepInterval) {
-            this.stepInterval = setInterval(this.step.bind(this), selectedBPM);
-        } else {
-            this.stop();
         }
     },
 
