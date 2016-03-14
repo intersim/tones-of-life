@@ -6,74 +6,72 @@ var synth = new Tone.PolySynth(16, Tone.SimpleSynth, {
             "oscillator" : {
                 "partials" : [0, 2, 3, 4],
             },
-            "volume" : -24
+            "volume" : -12
         }).toMaster();
 
 var selectedInstr = synth;
 
-var marimba = new Tone.PolySynth(8, Tone.Sampler, {
-    "A" : {
-        2 : "./samples/marimba/ogg/Marimba.yarn.ff.A2.stereo.ogg",
-        3 : "./samples/marimba/ogg/Marimba.yarn.ff.A3.stereo.ogg",
-        4 : "./samples/marimba/ogg/Marimba.yarn.ff.A4.stereo.ogg"
-        },
-    // "Bb" : {
-    //     3 : "./samples/marimba/ogg/Marimba.yarn.ff.Bb3.stereo.ogg",
-    //     4 : "./samples/marimba/ogg/Marimba.yarn.ff.Bb4.stereo.ogg"
-    //     },
-    // "B" : {
-    //     3 : "./samples/marimba/ogg/Marimba.yarn.ff.B3.stereo.ogg",
-    //     4 : "./samples/marimba/ogg/Marimba.yarn.ff.B4.stereo.ogg"
-    //     },
-    "C" : {
-        3 : "./samples/marimba/ogg/Marimba.yarn.ff.C3.stereo.ogg",
-        4 : "./samples/marimba/ogg/Marimba.yarn.ff.C4.stereo.ogg",
-        5 : "./samples/marimba/ogg/Marimba.yarn.ff.C5.stereo.ogg"
-        },
-    "D" : {
-        3 : "./samples/marimba/ogg/Marimba.yarn.ff.D3.stereo.ogg",
-        4 : "./samples/marimba/ogg/Marimba.yarn.ff.D4.stereo.ogg",
-        5 : "./samples/marimba/ogg/Marimba.yarn.ff.D5.stereo.ogg"
-        },
-    // "Eb" : {
-    //     3 : "./samples/marimba/ogg/Marimba.yarn.ff.Eb3.stereo.ogg",
-    //     4 : "./samples/marimba/ogg/Marimba.yarn.ff.Eb4.stereo.ogg",
-    //     5 : "./samples/marimba/ogg/Marimba.yarn.ff.Eb5.stereo.ogg"
-    //     },
-    "E" : {
-        3 : "./samples/marimba/ogg/Marimba.yarn.ff.E3.stereo.ogg",
-        4 : "./samples/marimba/ogg/Marimba.yarn.ff.E4.stereo.ogg",
-        5 : "./samples/marimba/ogg/Marimba.yarn.ff.E5.stereo.ogg"
-        },
-    "G" : {
-        2 : "./samples/marimba/ogg/Marimba.yarn.ff.G2.stereo.ogg",
-        3 : "./samples/marimba/ogg/Marimba.yarn.ff.G3.stereo.ogg",
-        4 : "./samples/marimba/ogg/Marimba.yarn.ff.G4.stereo.ogg",
-        5 : "./samples/marimba/ogg/Marimba.yarn.ff.G5.stereo.ogg"
-        }
-}).toMaster();
+// var marimba = new Tone.PolySynth(8, Tone.Sampler, {
+//     "A" : {
+//         2 : "./samples/marimba/ogg/Marimba.yarn.ff.A2.stereo.ogg",
+//         3 : "./samples/marimba/ogg/Marimba.yarn.ff.A3.stereo.ogg",
+//         4 : "./samples/marimba/ogg/Marimba.yarn.ff.A4.stereo.ogg"
+//         },
+//     "Bb" : {
+//         3 : "./samples/marimba/ogg/Marimba.yarn.ff.Bb3.stereo.ogg",
+//         4 : "./samples/marimba/ogg/Marimba.yarn.ff.Bb4.stereo.ogg"
+//         },
+//     "B" : {
+//         3 : "./samples/marimba/ogg/Marimba.yarn.ff.B3.stereo.ogg",
+//         4 : "./samples/marimba/ogg/Marimba.yarn.ff.B4.stereo.ogg"
+//         },
+//     "C" : {
+//         3 : "./samples/marimba/ogg/Marimba.yarn.ff.C3.stereo.ogg",
+//         4 : "./samples/marimba/ogg/Marimba.yarn.ff.C4.stereo.ogg",
+//         5 : "./samples/marimba/ogg/Marimba.yarn.ff.C5.stereo.ogg"
+//         },
+//     "D" : {
+//         3 : "./samples/marimba/ogg/Marimba.yarn.ff.D3.stereo.ogg",
+//         4 : "./samples/marimba/ogg/Marimba.yarn.ff.D4.stereo.ogg",
+//         5 : "./samples/marimba/ogg/Marimba.yarn.ff.D5.stereo.ogg"
+//         },
+//     "Eb" : {
+//         3 : "./samples/marimba/ogg/Marimba.yarn.ff.Eb3.stereo.ogg",
+//         4 : "./samples/marimba/ogg/Marimba.yarn.ff.Eb4.stereo.ogg",
+//         5 : "./samples/marimba/ogg/Marimba.yarn.ff.Eb5.stereo.ogg"
+//         },
+//     "E" : {
+//         3 : "./samples/marimba/ogg/Marimba.yarn.ff.E3.stereo.ogg",
+//         4 : "./samples/marimba/ogg/Marimba.yarn.ff.E4.stereo.ogg",
+//         5 : "./samples/marimba/ogg/Marimba.yarn.ff.E5.stereo.ogg"
+//         },
+//     "G" : {
+//         2 : "./samples/marimba/ogg/Marimba.yarn.ff.G2.stereo.ogg",
+//         3 : "./samples/marimba/ogg/Marimba.yarn.ff.G3.stereo.ogg",
+//         4 : "./samples/marimba/ogg/Marimba.yarn.ff.G4.stereo.ogg",
+//         5 : "./samples/marimba/ogg/Marimba.yarn.ff.G5.stereo.ogg"
+//         },
+//     "volume" : -12
+// }).toMaster();
 
 // Tone.Buffer.on('load', function () {
 //     console.log("trying to get samples working...");
 //     marimba.triggerAttack(['C.4', 'E.4', 'G.4']);
 // });
 
-// $('#instrument').on('change', function () {
-//     var val = $('#instrument option:selected').val();
-//     if (val == "synth") selectedInstr = synth;
-//     if (val == "marimba") selectedInstr = marimba;
+$('#instrument').on('change', function () {
+    var val = $('#instrument option:selected').val();
+    if (val == "synth") selectedInstr = synth;
+    if (val == "marimba") selectedInstr = marimba;
 
-//     var cells = document.getElementsByTagName('td');
-//     var cellsArr = [].slice.call(cells);
+    var cells = document.getElementsByTagName('td');
+    var cellsArr = [].slice.call(cells);
+    cellsArr.forEach(function(cell){
+        gameUtilities.setSamplerNote(cell);
+    });
 
-//     var cells = document.getElementsByTagName('td');
-//     var cellsArr = [].slice.call(cells);
-//     cellsArr.forEach(function(cell){
-//         gameUtilities.setSamplerNote(cell);
-//     })
-
-//     // getting this err when trying to select marimba: Tone.min.js:12 Uncaught TypeError: Failed to set the 'buffer' property on 'AudioBufferSourceNode': The provided value is not of type 'AudioBuffer'
-// });
+    // getting this err when trying to select marimba: Tone.min.js:12 Uncaught TypeError: Failed to set the 'buffer' property on 'AudioBufferSourceNode': The provided value is not of type 'AudioBuffer'
+});
 
 // ********** Scales **********
 
@@ -151,6 +149,15 @@ $('#scale').on('change', function () {
     cellsArr.forEach(function(cell){
         gameUtilities.setNewNote(cell);
     });
+
+    console.log('selectedInstr: ', $('#instrument option:selected').val());
+
+    if ($('#instrument option:selected').val() == 'marimba') {
+        cellsArr.forEach(function(cell){
+        gameUtilities.setSamplerNote(cell);
+    });
+
+    }
 });
 
 // ********** Looping **********
@@ -292,9 +299,8 @@ var gameUtilities = {
             gameUtilities.setStatus(cell, 'dead');
         } else {
             var note = gameUtilities.getNote(cell);
-            selectedInstr.triggerAttackRelease(note, 0.2);
+            selectedInstr.triggerAttackRelease(note, 0.5);
             gameUtilities.setStatus(cell, 'alive');
-            // gameUtilities.setScaleClass(cell, scale);
         }
     },
     killCell: function (cell) {
