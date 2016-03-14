@@ -115,40 +115,20 @@ var mixoScale = {
     15: "G2"
 };
 
-var eMixoScale = {
-    name: "e-mixolydian",
-    0: "E5",
-    1: "D5",
-    2: "B4",
-    3: "G#4",
-    4: "F#4",
-    5: "E4",
-    6: "D4",
-    7: "B4",
-    8: "G#4",
-    9: "F#3",
-    10: "E3",
-    11: "D3",
-    12: "B2",
-    13: "G#2",
-    14: "F#2",
-    15: "E2"
-};
-
 var minorScale = {
     name: "minor",
     0: "A5",
-    1: "G5",
+    1: "G#5",
     2: "E5",
     3: "C5",
     4: "B4",
     5: "A4",
-    6: "G4",
+    6: "G#4",
     7: "E4",
     8: "C4",
     9: "B2",
     10: "A3",
-    11: "G3",
+    11: "G#3",
     12: "E3",
     13: "C3",
     14: "B2",
@@ -182,7 +162,6 @@ $('#scale').on('change', function () {
     var val = $('#scale option:selected').val();
     if (val == "pen") scale = pentatonicScale;
     if (val == "mix") scale = mixoScale;
-    if (val == "e-mix") scale = eMixoScale;
     if (val == "min") scale = minorScale;
     if (val == "lyd") scale = lydianScale;
 
