@@ -40,3 +40,7 @@ td.mixolydian {
 td.minor {
   background-color: #2274A5;
 }
+
+td.lydian {
+  background-color: orange;
+}

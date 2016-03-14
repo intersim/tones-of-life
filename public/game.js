@@ -98,42 +98,83 @@ var pentatonicScale = {
 var mixoScale = {
     name: "mixolydian",
     0: "G5",
-    1: "E5",
+    1: "F5",
     2: "D5",
-    3: "C5",
-    4: "Bb4",
-    5: "G4",
-    6: "E4",
-    7: "D4",
-    8: "C4",
-    9: "Bb3",
-    10: "G3",
-    11: "E3",
-    12: "D3",
-    13: "C3",
-    14: "Bb2",
-    15: "G2"
-};
-
-var minorPentatonicScale = {
-    name: "minor",
-    0: "G5",
-    1: "Eb5",
-    2: "D5",
-    3: "C5",
+    3: "B5",
     4: "A4",
     5: "G4",
-    6: "Eb4",
+    6: "F4",
     7: "D4",
-    8: "C4",
+    8: "B4",
     9: "A3",
     10: "G3",
-    11: "Eb3",
+    11: "F3",
     12: "D3",
-    13: "C3",
+    13: "B3",
     14: "A2",
     15: "G2"
 };
+
+var eMixoScale = {
+    name: "e-mixolydian",
+    0: "E5",
+    1: "D5",
+    2: "B4",
+    3: "G#4",
+    4: "F#4",
+    5: "E4",
+    6: "D4",
+    7: "B4",
+    8: "G#4",
+    9: "F#3",
+    10: "E3",
+    11: "D3",
+    12: "B2",
+    13: "G#2",
+    14: "F#2",
+    15: "E2"
+};
+
+var minorScale = {
+    name: "minor",
+    0: "A5",
+    1: "G5",
+    2: "E5",
+    3: "C5",
+    4: "B4",
+    5: "A4",
+    6: "G4",
+    7: "E4",
+    8: "C4",
+    9: "B2",
+    10: "A3",
+    11: "G3",
+    12: "E3",
+    13: "C3",
+    14: "B2",
+    15: "A2"
+};
+
+var lydianScale = {
+    name: "lydian",
+    0: "C5",
+    1: "B5",
+    2: "A5",
+    3: "F5",
+    4: "C5",
+    5: "B4",
+    6: "A4",
+    7: "F4",
+    8: "C4",
+    9: "B3",
+    10: "A3",
+    11: "F3",
+    12: "C3",
+    13: "B2",
+    14: "A2",
+    15: "F2"
+};
+
 
 var scale = pentatonicScale;
 
@@ -141,7 +182,9 @@ $('#scale').on('change', function () {
     var val = $('#scale option:selected').val();
     if (val == "pen") scale = pentatonicScale;
     if (val == "mix") scale = mixoScale;
-    if (val == "min") scale = minorPentatonicScale;
+    if (val == "e-mix") scale = eMixoScale;
+    if (val == "min") scale = minorScale;
+    if (val == "lyd") scale = lydianScale;
 
     var cells = document.getElementsByTagName('td');
     var cellsArr = [].slice.call(cells);
